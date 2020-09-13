@@ -1,5 +1,6 @@
 import os
 from modules.passwords.password_object import PasswordObject
+from modules.files.file_manager import FileManager
 
 
 class PasswordsStorage:
@@ -10,18 +11,15 @@ class PasswordsStorage:
         self.passwords_object = dict()
         # ToDO Add FileModeOpening Enum
         if self.file_name not in os.listdir():
-            print('Initializing ...')
-            self._get_or_create_password_storage('w')
+            print('No file found, creating a new one ...')
+            self.file = FileManager.create_file()
         else:
-            self._get_or_create_password_storage('r')
+            self.file = FileManager.get_file_for_reading()
             self.load_passwords()
 
     def __del__(self):
         if self.file:
             self.file.close()
-
-    def _get_or_create_password_storage(self, mode):
-        self.file = open(self.file_name, mode)
 
     def load_passwords(self):
         print("reading ...")
@@ -64,7 +62,7 @@ class PasswordsStorage:
         self._save_new_file()
 
     def _save_new_file(self):
-        self._get_or_create_password_storage('w')
+        self.file = FileManager.get_file_for_updating()
         for password_object in self.passwords_object.values():
             self.file.write(self._get_password_format_for_file(password_object))
         self.file.close()
