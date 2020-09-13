@@ -7,5 +7,4 @@ if __name__ == '__main__':
     login = Login()
 
     menu = MenuLauncher()
-    menu.launch_menu()
 

@@ -15,6 +15,9 @@ class MenuLauncher:
         "5": MenuOption("Start over", None)
     }
 
+    def __init__(self):
+        self.launch_menu()
+
     def launch_menu(self):
         while True:
             ScreenManager.clear_screen()
