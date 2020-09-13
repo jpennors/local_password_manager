@@ -69,4 +69,4 @@ class PasswordsStorage:
         self.file.close()
 
     def _get_password_format_for_file(self, password_object: PasswordObject) -> str:
-        return f'{password_object.name}:{password_object.password}'
+        return f'{password_object.encrypted_name}:{password_object.encrypted_password}\n'
