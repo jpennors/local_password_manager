@@ -56,7 +56,7 @@ class PasswordsStorage:
 
     def update_password(self, old_name, name, password_object: PasswordObject):
         if old_name in self.passwords_object.keys():
-            if old_name != name :
+            if old_name != name:
                 del self.passwords_object[old_name]
             self.passwords_object[name] = password_object
         # ToDO Error message when key not found
@@ -65,7 +65,8 @@ class PasswordsStorage:
     def _save_new_file(self):
         self._get_or_create_password_storage('w')
         for password_object in self.passwords_object.values():
-            self.file.write(self._get_or_create_password_storage(password_object))
+            self.file.write(self._get_password_format_for_file(password_object))
+        self.file.close()
 
     def _get_password_format_for_file(self, password_object: PasswordObject) -> str:
         return f'{password_object.name}:{password_object.password}'
