@@ -16,22 +16,26 @@ class MenuLauncher:
     }
 
     def launch_menu(self):
-        ScreenManager.clear_screen()
-        self.display_option()
+        while True:
+            ScreenManager.clear_screen()
+            self.display_option()
+            ScreenManager.keyboard_action_before_clearing()
 
     def display_option(self):
+        print('--- MAIN MENU ---')
         for (menu_option_id, menu_option) in self.menu_options.items():
             print(f'{menu_option_id} - {menu_option.description}')
         self.select_option()
 
     def select_option(self):
-        menu_option_id = input('Which option ?\n')
+        menu_option_id = input('Select an option ?\n')
         if menu_option_id not in self.menu_options.keys():
             ErrorMessage.display_error_message(ErrorException.WRONG_MENU_OPTION)
             self.launch_menu()
         else:
+            ScreenManager.clear_screen()
             self.display_selection(menu_option_id)
             self.menu_options[menu_option_id].action()
 
     def display_selection(self, menu_option_id):
-        print(f'Tu as sélectionné "{self.menu_options[menu_option_id].description}"')
+        print(f'You select option "{self.menu_options[menu_option_id].description}"\n')

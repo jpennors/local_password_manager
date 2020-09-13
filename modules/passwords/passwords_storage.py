@@ -22,7 +22,6 @@ class PasswordsStorage:
             self.file.close()
 
     def load_passwords(self):
-        print("reading ...")
         for line in self.file.read().split('\n'):
             if not line:
                 return
@@ -67,5 +66,6 @@ class PasswordsStorage:
             self.file.write(self._get_password_format_for_file(password_object))
         self.file.close()
 
-    def _get_password_format_for_file(self, password_object: PasswordObject) -> str:
+    @staticmethod
+    def _get_password_format_for_file(password_object: PasswordObject) -> str:
         return f'{password_object.encrypted_name}:{password_object.encrypted_password}\n'

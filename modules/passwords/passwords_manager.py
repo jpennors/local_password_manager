@@ -8,15 +8,16 @@ class PasswordsManager:
 
     def __init__(self):
         login = Login()
-        print(login)
         self.secret_key = login.secret_key
         self.password_storage = PasswordsStorage(self.secret_key)
 
     def list_passwords(self):
+        print('--- PASSWORD LIST ---\n')
         password_names = self.password_storage.get_passwords_list()
         self.display_password_list(password_names)
 
     def add_new_password(self):
+        print('--- PASSWORD CREATION ---\n')
         name = input('What is the name of your password?\n')
         # ToDO Check if it exists
         password = input(f'What is the password of {name}?\n')
@@ -27,19 +28,14 @@ class PasswordsManager:
         self.password_storage.add_password(new_password_object)
 
     def view_password(self):
-        password_names = self.password_storage.get_passwords_list()
-        self.display_password_list(password_names)
-        password_id = input('Which password do you want to consult ?\n')
-        # TODo Check for password_id value
-        password_object = self.password_storage.get_password(password_names[int(password_id)])
+        print('--- PASSWORD INFO ---\n')
+        password_name = self._get_specific_password(action='consult')
+        password_object = self.password_storage.get_password(password_name)
         self.display_password_info(password_object)
 
     def update_pasword(self):
-        password_names = self.password_storage.get_passwords_list()
-        self.display_password_list(password_names)
-        password_id = input('Which password do you want to update ?\n')
-        # TODo Check for password_id value
-        old_name = password_names[int(password_id)]
+        print('--- PASSWORD UPDATE ---\n')
+        old_name = self._get_specific_password(action='update')
         new_name_needed = input(f'Do you want to edit the name of '
                                 f'the password {old_name}? (y/N)\n')
         if new_name_needed == 'y':
@@ -55,17 +51,24 @@ class PasswordsManager:
         print('Password updated')
 
     def delete_password(self):
+        print('--- PASSWORD DELETION ---\n')
+        password_name = self._get_specific_password(action='delete')
+        self.password_storage.remove_password(password_name)
+
+    def _get_specific_password(self, action: str):
         password_names = self.password_storage.get_passwords_list()
         self.display_password_list(password_names)
-        password_id = input('Which password do you want to delete ?\n')
-        self.password_storage.remove_password(password_names[int(password_id)])
+        password_id = input(f'Which password do you want to {action} ?\n')
+        # ToDo Check for password_id  validity
+        return password_names[int(password_id)]
 
-    def display_password_list(self, password_names):
-        print('--- PASSWORD LIST ---\n')
+    @staticmethod
+    def display_password_list(password_names):
         for index, password_name in enumerate(password_names):
             print(f'{index} - {password_name}')
 
-    def display_password_info(self, password_object: PasswordObject):
+    @staticmethod
+    def display_password_info(password_object: PasswordObject):
         print(f'Password {password_object.name} : {password_object.password}\n')
         pyperclip.copy(password_object.password)
         print('Your password has been copied to clipboard !')
