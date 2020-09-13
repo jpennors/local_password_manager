@@ -41,6 +41,7 @@ class PasswordsStorage:
             # ToDO Add Error message
             return
         self.passwords_object[password_object.name] = password_object
+        self._save_new_file()
 
     def get_password(self, name):
         if name not in self.passwords_object.keys():
