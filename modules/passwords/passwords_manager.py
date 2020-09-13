@@ -1,6 +1,7 @@
 from modules.passwords.password_object import PasswordObject
 from modules.passwords.passwords_storage import PasswordsStorage
 from modules.login.login import Login
+import pyperclip
 
 
 class PasswordsManager:
@@ -66,4 +67,6 @@ class PasswordsManager:
 
     def display_password_info(self, password_object: PasswordObject):
         print(f'Password {password_object.name} : {password_object.password}\n')
+        pyperclip.copy(password_object.password)
+        print('Your password has been copied to clipboard !')
 
