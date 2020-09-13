@@ -8,10 +8,10 @@ from modules.menu.menu_actions import MenuAction
 class MenuLauncher:
     menu_options = {
         "0": MenuOption("Look for a password", MenuAction.view_password),
-        "1": MenuOption("List passwords", MenuAction.view_password),
-        "2": MenuOption("Update a password", None),
+        "1": MenuOption("List passwords", MenuAction.list_passwords),
+        "2": MenuOption("Update a password", MenuAction.update_pasword),
         "3": MenuOption("Add a new password", MenuAction.add_new_password),
-        "4": MenuOption("Delete a password", None),
+        "4": MenuOption("Delete a password", MenuAction.delete_password),
         "5": MenuOption("Start over", None)
     }
 

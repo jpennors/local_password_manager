@@ -17,3 +17,14 @@ class MenuAction:
     def view_password():
         password_manager = PasswordsManager()
         password_manager.view_password()
+
+    @staticmethod
+    def update_pasword():
+        password_manager = PasswordsManager()
+        password_manager.update_pasword()
+
+    @staticmethod
+    def delete_password():
+        password_manager = PasswordsManager()
+        password_manager.delete_password()
+
