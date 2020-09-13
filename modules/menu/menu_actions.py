@@ -28,3 +28,7 @@ class MenuAction:
         password_manager = PasswordsManager()
         password_manager.delete_password()
 
+    @staticmethod
+    def quit():
+        quit()
+
