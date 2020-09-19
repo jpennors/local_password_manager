@@ -1,6 +1,9 @@
 import configparser
 import pyperclip
 import hashlib
+from modules.utils.input.input import Input
+from modules.utils.input.input_type import InputType
+
 
 class Login:
     secret_key: str
@@ -27,12 +30,12 @@ class Login:
     def _login(self):
         if not self.hashed_secret_key:
             return self._create_secret_key()
-        secret_key = input('Enter your secret key\n')
+        secret_key = Input.get_user_input('Enter your secret key\n', InputType.APP_KEY_LOGIN)
         secret_key_try = 1
 
         while hashlib.sha3_384(secret_key.encode()).hexdigest() != self.hashed_secret_key:
             print('Wrong password')
-            secret_key = input('Enter your secret key\n')
+            secret_key = Input.get_user_input('Enter your secret key\n', InputType.APP_KEY_LOGIN)
             secret_key_try += 1
             if secret_key_try > 5 :
                 print('You missed too much, bye !')
@@ -43,11 +46,13 @@ class Login:
     @staticmethod
     def _create_secret_key():
         print('We did not find any existing configuration, let\'s start !')
-        password = input('First of all, write a password. This one is extremely important:\n')
+        password = Input.get_user_input(
+            'First of all, write a password. This one is extremely important:\n',
+            InputType.APP_KEY_CREATION)
 
         confirm_password = ''
         while password != confirm_password:
-            confirm_password = input('Please confirm it\n')
+            confirm_password = Input.get_user_input('Please confirm it\n', InputType.APP_KEY_CREATION)
 
         hashed_secret_key = hashlib.sha3_384(password.encode()).hexdigest()
         print(f'Your secret key is \n{hashed_secret_key}')

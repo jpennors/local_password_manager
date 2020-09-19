@@ -2,6 +2,8 @@ from modules.passwords.password_object import PasswordObject
 from modules.passwords.passwords_storage import PasswordsStorage
 from modules.login.login import Login
 import pyperclip
+from modules.utils.input.input import Input
+from modules.utils.input.input_type import InputType
 
 
 class PasswordsManager:
@@ -18,14 +20,15 @@ class PasswordsManager:
 
     def add_new_password(self):
         print('--- PASSWORD CREATION ---\n')
-        name = input('What is the name of your password?\n')
+        name = Input.get_user_input('What is the name of your password?\n', InputType.PASSWORD_NAME)
         # ToDO Check if it exists
-        password = input(f'What is the password of {name}?\n')
+        password = Input.get_user_input(f'What is the password of {name}?\n', InputType.PASSWORD)
 
         new_password_object = PasswordObject(secret_key=self.secret_key)
         new_password_object.encrypt(name=name, password=password)
 
         self.password_storage.add_password(new_password_object)
+        print('Password added')
 
     def view_password(self):
         print('--- PASSWORD INFO ---\n')
@@ -36,14 +39,14 @@ class PasswordsManager:
     def update_pasword(self):
         print('--- PASSWORD UPDATE ---\n')
         old_name = self._get_specific_password(action='update')
-        new_name_needed = input(f'Do you want to edit the name of '
-                                f'the password {old_name}? (y/N)\n')
+        new_name_needed = Input.get_user_input(f'Do you want to edit the name of '
+                                f'the password {old_name}? (y/N)\n', InputType.CONFIRM)
         if new_name_needed == 'y':
-            name = input('What is the new name of your password?\n')
+            name = Input.get_user_input('What is the new name of your password?\n', InputType.PASSWORD_NAME)
         else:
             name = old_name
             # ToDO Check if it exists
-        password = input(f'What is the new password of {name}?\n')
+        password = Input.get_user_input(f'What is the new password of {name}?\n', InputType.PASSWORD)
 
         new_password_object = PasswordObject(secret_key=self.secret_key)
         new_password_object.encrypt(name=name, password=password)
@@ -54,12 +57,14 @@ class PasswordsManager:
         print('--- PASSWORD DELETION ---\n')
         password_name = self._get_specific_password(action='delete')
         self.password_storage.remove_password(password_name)
+        print('Password removed')
 
     def _get_specific_password(self, action: str):
         password_names = self.password_storage.get_passwords_list()
         self.display_password_list(password_names)
-        password_id = input(f'Which password do you want to {action} ?\n')
-        # ToDo Check for password_id  validity
+        password_id = Input.get_user_input(f'Which password do you want to {action} ?\n',
+                                           InputType.PASSWORD_OPTION,
+                                           [str(index) for index in range(len(password_names))])
         return password_names[int(password_id)]
 
     @staticmethod

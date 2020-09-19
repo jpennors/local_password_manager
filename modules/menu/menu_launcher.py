@@ -1,11 +1,12 @@
-from modules.error.message import ErrorMessage
-from modules.error.exeption import ErrorException
 from modules.utils.screen_manager import ScreenManager
 from modules.menu.menu_option import MenuOption
 from modules.menu.menu_actions import MenuAction
+from modules.utils.input.input import Input
+from modules.utils.input.input_type import InputType
 
 
 class MenuLauncher:
+
     menu_options = {
         "0": MenuOption("Display a password", MenuAction.view_password),
         "1": MenuOption("List passwords", MenuAction.list_passwords),
@@ -31,14 +32,11 @@ class MenuLauncher:
         self.select_option()
 
     def select_option(self):
-        menu_option_id = input('Select an option ?\n')
-        if menu_option_id not in self.menu_options.keys():
-            ErrorMessage.display_error_message(ErrorException.WRONG_MENU_OPTION)
-            self.launch_menu()
-        else:
-            ScreenManager.clear_screen()
-            self.display_selection(menu_option_id)
-            self.menu_options[menu_option_id].action()
+        menu_option_id = Input.get_user_input('Select an option ?\n', InputType.MENU_OPTION,
+                                              list(self.menu_options.keys()))
+        ScreenManager.clear_screen()
+        self.display_selection(menu_option_id)
+        self.menu_options[menu_option_id].action()
 
     def display_selection(self, menu_option_id):
         print(f'You select option "{self.menu_options[menu_option_id].description}"\n')
