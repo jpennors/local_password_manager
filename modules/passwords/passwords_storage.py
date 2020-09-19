@@ -9,7 +9,6 @@ class PasswordsStorage:
     def __init__(self, secret_key):
         self.secret_key = secret_key
         self.passwords_object = dict()
-        # ToDO Add FileModeOpening Enum
         if self.file_name not in os.listdir():
             print('No file found, creating a new one ...')
             self.file = FileManager.create_file()
@@ -25,9 +24,11 @@ class PasswordsStorage:
         for line in self.file.read().split('\n'):
             if not line:
                 return
-            encrypted_name, encrypted_password = line.split(':')
+            encrypted_name, encrypted_identifier, encrypted_password = line.split(':')
             password_object = PasswordObject(secret_key=self.secret_key)
-            password_object.decrypt(encrypted_name=encrypted_name, encrypted_password=encrypted_password)
+            password_object.decrypt(encrypted_name=encrypted_name,
+                                    encrypted_identifier=encrypted_identifier,
+                                    encrypted_password=encrypted_password)
             self.passwords_object[password_object.name] = password_object
 
     def get_passwords_list(self):
@@ -68,4 +69,5 @@ class PasswordsStorage:
 
     @staticmethod
     def _get_password_format_for_file(password_object: PasswordObject) -> str:
-        return f'{password_object.encrypted_name}:{password_object.encrypted_password}\n'
+        return f'{password_object.encrypted_name}:{password_object.encrypted_identifier}' \
+               f':{password_object.encrypted_password}\n'

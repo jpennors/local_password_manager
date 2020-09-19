@@ -22,10 +22,11 @@ class PasswordsManager:
         print('--- PASSWORD CREATION ---\n')
         name = Input.get_user_input('What is the name of your password?\n', InputType.PASSWORD_NAME)
         # ToDO Check if it exists
+        identifier = Input.get_user_input(f'What is the identifier of {name}?\n', InputType.IDENTIFIER)
         password = Input.get_user_input(f'What is the password of {name}?\n', InputType.PASSWORD)
 
         new_password_object = PasswordObject(secret_key=self.secret_key)
-        new_password_object.encrypt(name=name, password=password)
+        new_password_object.encrypt(name=name, identifier=identifier, password=password)
 
         self.password_storage.add_password(new_password_object)
         print('Password added')
@@ -46,10 +47,12 @@ class PasswordsManager:
         else:
             name = old_name
             # ToDO Check if it exists
+
+        identifier = Input.get_user_input('What is the new identifier of {name}?\n', InputType.IDENTIFIER)
         password = Input.get_user_input(f'What is the new password of {name}?\n', InputType.PASSWORD)
 
         new_password_object = PasswordObject(secret_key=self.secret_key)
-        new_password_object.encrypt(name=name, password=password)
+        new_password_object.encrypt(name=name, identifier=identifier, password=password)
         self.password_storage.update_password(old_name=old_name, name=name, password_object=new_password_object)
         print('Password updated')
 
@@ -74,7 +77,9 @@ class PasswordsManager:
 
     @staticmethod
     def display_password_info(password_object: PasswordObject):
-        print(f'Password {password_object.name} : {password_object.password}\n')
+        print(f'Password {password_object.name}\n'
+              f'Identifier: {password_object.identifier}\n'
+              f'Password: {password_object.password}\n')
         pyperclip.copy(password_object.password)
         print('Your password has been copied to clipboard !')
 
