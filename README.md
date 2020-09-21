@@ -14,13 +14,13 @@ program for the first time which will be used to encrypt and decrypt data.
 
 - First of all, download the repository :
 
-        ```git clone https://github.com/jpennors/local_password_manager``` 
+        git clone https://github.com/jpennors/local_password_manager
 
 - Create the file `env.ini` by copy pasting the file `env.example.ini` in `config` folder.
 
 - Download all dependencies :
 
-        ```pip install requirements.txt```
+        pip install requirements.txt
 
 - Just launch the program with the command `python password.py` ! As you launch it for the first time the program will ask you to give a password. The latter 
 will be the one that protect all of your passwords. Use a **complex** one and remember it !
@@ -36,36 +36,36 @@ password. You can also use arguments in your command (see below).
 
 - Launch interactive mode (default one) :
 
-        ```python password.py -interactive```
+        python password.py -interactive
 
 - List all your passwords (doesn't display credentials):
 
-        ```python password.py -list```
+        python password.py -list
 
 - Consult credentials of a password :
 
-        ```python password.py -get -n=name_of_your_password```
+        python password.py -get -n=name_of_your_password
 
 Argument `-n=` is optional. In case you don't fill it, passwords list will be displayed and you will be able to 
 select the one you want to consult.
 
 - Add a new password :
 
-        ```python password.py -add -n=name_of_your_password -i=identifier_of_password -p=password_itself```
+        python password.py -add -n=name_of_your_password -i=identifier_of_password -p=password_itself
 
 Arguments `-n=`, `-i=` and `-p=` are optional. In case you don't fill some you will be asked to fill missing 
 information. 
 
 - Update a password :
 
-        ```python password.py -update -n=name_of_your_password -i=identifier_of_password -p=password_itself```
+        python password.py -update -n=name_of_your_password -i=identifier_of_password -p=password_itself
 
 Arguments `-n=`, `-i=` and `-p=` are optional. In case you don't fill some you will be asked to fill missing 
 information. 
 
 - Remove a password :
 
-        ```python password.py -remove -n=name_of_your_password```
+        python password.py -remove -n=name_of_your_password
 
 Argument `-n=` is optional. In case you don't fill it, password list will be displayed and you will be able to 
 select the one you want to remove.
