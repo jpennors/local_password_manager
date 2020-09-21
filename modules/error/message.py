@@ -3,7 +3,7 @@ from modules.error.exeption import ErrorException
 
 class ErrorMessage:
     error_messages = {
-        ErrorException.WRONG_MENU_OPTION: 'L\'option choisit n\'existe pas.'
+        ErrorException.NO_ARGS: 'There is no argument. Please use -h to consult options.'
     }
 
     @staticmethod

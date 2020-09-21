@@ -2,4 +2,5 @@ from enum import Enum
 
 
 class ErrorException(Enum):
-    WRONG_MENU_OPTION = 1
+    NO_ARGS = 1,
+
