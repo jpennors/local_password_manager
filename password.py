@@ -70,7 +70,7 @@ def main():
         password_manager = PasswordsManager()
         return password_manager.delete_password(password_name, identifier, password)
 
-    return ErrorMessage.display_error_message(ErrorException.NO_ARGS)
+    return MenuLauncher()
 
 
 if __name__ == '__main__':
